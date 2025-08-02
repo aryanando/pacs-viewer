@@ -138,15 +138,15 @@ module.exports = (env, argv) => {
       ...(IS_COVERAGE
         ? []
         : [
-          new InjectManifest({
-            swDest: 'sw.js',
-            swSrc: path.join(SRC_DIR, 'service-worker.js'),
-            // Need to exclude the theme as it is updated independently
-            exclude: [/theme/],
-            // Cache large files for the manifests to avoid warning messages
-            maximumFileSizeToCacheInBytes: 1024 * 1024 * 50,
-          }),
-        ]),
+            new InjectManifest({
+              swDest: 'sw.js',
+              swSrc: path.join(SRC_DIR, 'service-worker.js'),
+              // Need to exclude the theme as it is updated independently
+              exclude: [/theme/],
+              // Cache large files for the manifests to avoid warning messages
+              maximumFileSizeToCacheInBytes: 1024 * 1024 * 50,
+            }),
+          ]),
     ],
     // https://webpack.js.org/configuration/dev-server/
     devServer: {
@@ -162,12 +162,18 @@ module.exports = (env, argv) => {
       },
       proxy: [
         {
-          '/dicomweb': 'http://localhost:5000',
-          '/dicom-microscopy-viewer': {
-            target: 'http://localhost:3000',
-            pathRewrite: {
-              '^/dicom-microscopy-viewer': `/${PUBLIC_URL}/dicom-microscopy-viewer`,
-            },
+          context: ['/dicomweb', '/dicom-web'],
+          target: 'http://localhost:8042',
+          changeOrigin: true,
+          secure: false,
+          logLevel: 'debug',
+        },
+        {
+          context: ['/dicom-microscopy-viewer'],
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/dicom-microscopy-viewer': `/${PUBLIC_URL}/dicom-microscopy-viewer`,
           },
         },
       ],
