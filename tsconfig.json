@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "checkJs": true,
-    "isolatedModules": true,
-    "emitDeclarationOnly": true,
-    "jsx": "react",
-    "resolveJsonModule": true,
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "allowJs": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "target": "ES2022",
-    "outDir": "./dist",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
     "paths": {
       "@ohif/core": ["platform/core/src"],
       "@ohif/ui": ["platform/ui/src"],
@@ -27,15 +30,56 @@
       "@ohif/mode-ultrasound-pleura-bline": ["./modes/usAnnotation/src"],
       "@ohif/extension-cornerstone": ["./extensions/cornerstone/src"],
       "@ohif/extension-dicom-pdf": ["./extensions/dicom-pdf/src"],
-      "@state": ["./platform/app/src/state"]
-    }
+      "@ohif/mode-segmentation": ["./modes/segmentation/src"],
+      "@state": ["./platform/app/src/state"],
+      "~/*": ["./src/*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "types": [],
+    "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
-    "platform/**/src/**/*",
+    "platform/**/src/**/*.ts",
+    "platform/**/src/**/*.tsx",
+    "platform/**/src/**/*.js",
+    "platform/**/src/**/*.jsx",
     "platform/**/public/**/*",
-    "extensions/**/src/**/*",
-    "modes/**/src/**/*",
-    "tests/**/*"
+    "extensions/**/src/**/*.ts",
+    "extensions/**/src/**/*.tsx",
+    "extensions/**/src/**/*.js",
+    "extensions/**/src/**/*.jsx",
+    "modes/**/src/**/*.ts",
+    "modes/**/src/**/*.tsx",
+    "modes/**/src/**/*.js",
+    "modes/**/src/**/*.jsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "tests/**/*.js",
+    "tests/**/*.jsx",
+    "**/*.d.ts"
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.test.js",
+    "**/*.test.jsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.spec.js",
+    "**/*.spec.jsx",
+    "**/cypress/**",
+    "**/playwright/**",
+    "**/.next/**",
+    "**/out/**"
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }
